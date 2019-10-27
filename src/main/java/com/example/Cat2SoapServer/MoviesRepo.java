@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -50,6 +52,10 @@ public class MoviesRepo {
     public Movie findMovie(String name){
         Assert.notNull(name, "The movie's name must not be null");
         return moviesMAP.get(name);
+    }
+
+    public List<Movie> getAllMovies(){
+        return new ArrayList<>(moviesMAP.values());
     }
 
 }

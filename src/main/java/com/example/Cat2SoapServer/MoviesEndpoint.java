@@ -1,7 +1,6 @@
 package com.example.Cat2SoapServer;
 
-import localhost._8080.movies.GetMovieRequest;
-import localhost._8080.movies.GetMovieResponse;
+import localhost._8080.movies.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -24,6 +23,16 @@ public class MoviesEndpoint {
     public GetMovieResponse getMovie(@RequestPayload GetMovieRequest request){
         GetMovieResponse response = new GetMovieResponse();
         response.setMovie(moviesRepo.findMovie(request.getName()));
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllMoviesRequest")
+    @ResponsePayload
+    public GetAllMoviesResponse getAllMovies(@RequestPayload GetAllMoviesRequest request){
+        GetAllMoviesResponse response = new GetAllMoviesResponse();
+        for(Movie movie : moviesRepo.getAllMovies()){
+            response.getMovie().add(movie);
+        }
         return response;
     }
 }
